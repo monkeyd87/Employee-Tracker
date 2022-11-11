@@ -34,26 +34,8 @@ function emplpoyeeManager(){
                 'Remove Employee'
             ]
         }
-    ]).then(res=>{
-        switch(res.option){
-            case 'View all Employees':
-                console.log('view all')
-                emplpoyeeManager()
-                break;
-    
-            case 'View all Employees by Department':
-                break;
-    
-            case 'View All Employees by Manager':
-                break;
-    
-            case  'Add Employee':
-                break;
-    
-            case 'Remove Employee':
-                break;
-        }
-    })
+    ])
 }
 
-emplpoyeeManager()
+
+exports = emplpoyeeManager()
