@@ -2,35 +2,50 @@
 
 const db = require("./connection")
 const inquirer = require('inquirer')
-// const employeeManager = require('./app')
+
 
 const prompt = inquirer.createPromptModule()
 
 class DB{
     constructor(){
-        this.db = db;
+        this.db = db
     }
 
-    viewAllEmployees(){
+    async viewAllEmployees(prom){
         this.db.query(`SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager
         FROM employee
         LEFT JOIN employee manager on manager.id = employee.Managerid
         INNER JOIN role ON (role.id = employee.Roleid)
         INNER JOIN department ON (department.id = role.Departmentid)
-        ORDER BY employee.id;`,(err,data)=>err?console.error(err):console.table(data))
+        ORDER BY employee.id;`,async(err,data)=>{
+            if(err)throw err
+            console.table(data)
+            console.log('\n')
+            await  prom()
+            
+        })
+       
+        
+
     }
 
-    viewAllRoles(){
-        this.db.query('Select * FROM role',(err,data)=>console.table(data))
+    viewAllRoles(prom){
+        this.db.query('Select * FROM role',async(err,data)=>{
+            console.table(data)
+            await prom()
+        })
         
 
     }
     
-    viewAllDepartments(){
-        this.db.query('Select * FROM department',(err,data)=>console.table(data))
+    viewAllDepartments(prom){
+        this.db.query('Select * FROM department',async(err,data)=>{
+            console.table(data)
+            await prom()
+        })
     }
 
-    async addEmployee(){
+    async addEmployee(prom){
         let name = await prompt([
             {
                 type: 'input',
@@ -110,9 +125,9 @@ class DB{
                     Roleid: roleId,
                     Managerid: parseInt(managerId)
                 },
-                (err, res) => {
+                async(err, res) => {
                     if (err) throw err;
-                    
+                    await prom()
                     ;
 
                 }
@@ -138,7 +153,7 @@ class DB{
 
 
     }
-    async addDepartment(){
+    async addDepartment(prom){
            let {department} = await prompt({
                 type: 'input',
                 name: 'department',
@@ -152,9 +167,10 @@ class DB{
             },async (err,res)=>{
                 if(err)throw err
                 console.log(err)
+                await prom()
             })
     }
-    async addRole(){
+    async addRole(prom){
         const {name,salary} = await prompt(
             [
                 {
@@ -204,13 +220,14 @@ class DB{
             },async(err,res)=>{
                 if(err)throw err
                 console.log('done')
+                await prom()
             })
         })
 
 
         
     }
-    async UpdateEmployeeRole(){
+    async UpdateEmployeeRole(prom){
         let employeeId
         let role
         this.db.query('SELECT first_name, last_name, id FROM employee',async(err,res)=>{
@@ -249,9 +266,10 @@ class DB{
                         roleId = data.id
                     }
                 }
-                this.db.query(`UPDATE employee SET Roleid= ${roleId} where id=${employeeId}`,(err,res)=>{
+                this.db.query(`UPDATE employee SET Roleid= ${roleId} where id=${employeeId}`,async(err,res)=>{
                     if (err) throw err;
             console.log('Role has been updated..')
+            await prom()
                 })
                 
                 
@@ -267,7 +285,9 @@ class DB{
 }
 
 const database =  new DB()
-database.viewAllEmployees()
-// db.end()
+
+module.exports = DB
+
+
 
 
