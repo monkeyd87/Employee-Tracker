@@ -123,7 +123,7 @@ class DB{
                     first_name: name.first,
                     last_name: name.last,
                     Roleid: roleId,
-                    Managerid: parseInt(managerId)
+                    Managerid: parseInt(managerId)?parseInt(managerId):managerId
                 },
                 async(err, res) => {
                     if (err) throw err;

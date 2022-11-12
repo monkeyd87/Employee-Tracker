@@ -42,16 +42,16 @@ INSERT INTO department
     (name)
 VALUES
     ('Operations'),
-    ('Analystics'),
+    ('Kitchen'),
     ('Marketing'),
     ('Executive');
 INSERT INTO role
     (title, salary, Departmentid)
 VALUES
     ('General Manager', 11000000, 1),
-    ('Coach', 4000000, 1),
-    ('Team Lead Analyst', 15000000, 2),
-    ('Team Analyst', 8000000, 2),
+    ('Intern', 4000000, 1),
+    ('Lead Analyst', 15000000, 2),
+    ('Analyst', 8000000, 2),
     ('Media Manager', 7000000, 3),
     ('Media Specialist', 3000000, 3),
     ('CEO', 45000000, 4),
@@ -59,11 +59,11 @@ VALUES
 INSERT INTO employee
     (first_name, last_name, Roleid, Managerid)
 VALUES
-    ('John', 'Stockton', 1, NULL),
-    ('Karl', 'Malone', 2, 1),
-    ('Michael', 'Jordan', 3, NULL),
-    ('Steve', 'Kerr', 4, 3),
-    ('Shawn', 'Kemp', 5, NULL),
-    ('Gary', 'Peyton', 6, 5),
-    ('Magic', 'Johnson', 7, NULL),
-    ('Larry', 'Bird', 8, 7);
+    ('Farm', 'Saephanh', 1, NULL),
+    ('Dwayne', 'Jackson', 2, 1),
+    ('Joe', 'Mama', 3, NULL),
+    ('Hugh G', 'Butts', 4, 3),
+    ('Han', 'Jobbs', 5, NULL),
+    ('Ben', 'Dover', 6, 5),
+    ('Hugh', 'Jass', 7, NULL),
+    ('Tess T', 'Culls', 8, 7);
